@@ -2,6 +2,7 @@ steps:
   - label: "Publish Library"
     key: "publish"
     command:
+      - "npm ci"
       - "node version patch"
     agents:
       queue: "node14"
