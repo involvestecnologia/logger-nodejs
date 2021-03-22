@@ -1,0 +1,8 @@
+steps:
+  - label: "Publish Library"
+    key: "publish"
+    command:
+      - "node version patch"
+    agents:
+      queue: "node14"
+    if: build.branch == "master"

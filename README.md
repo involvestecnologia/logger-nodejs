@@ -12,7 +12,7 @@ npm install @involvestecnologia/logger-nodejs
 Basic example how to log with the library:
 
 ``` js
-const { logger } = require('@involvestecnologia/logger-nodejs');
+const { logger } = require('@involves/logger-nodejs');
 
 (() => {
   logger.info('Logger example')
@@ -28,10 +28,10 @@ You can configure your logger to add more details:
 
 ``` js
 const packageJson = require('./package.json')
-const { configureLogger, logger } = require('@involvestecnologia/logger-nodejs');
+const { LoggerConfigure, logger } = require('@involves/logger-nodejs');
 
 (() => {
-  configureLogger({ name: packageJson.name, version: packageJson.version }, process.env.LOG_LEVEL)
+  LoggerConfigure({ name: packageJson.name, version: packageJson.version }, process.env.LOG_LEVEL)
   logger.info('Logger example')
 })()
 ```
@@ -47,7 +47,7 @@ Just add the middleware into express:
 
 ``` js
 const app = require('express')()
-const { LoggerMiddleware } = require('@involvestecnologia/logger-nodejs')
+const { LoggerMiddleware } = require('@involves/logger-nodejs')
 
 app.use(LoggerMiddleware.logRequest)
 ```

@@ -1,10 +1,10 @@
-const constants = require('./src/logger-constants')
-const { logger, configureLogger } = require('./src/logger')
+const { logger, LoggerConfigure } = require('./src/logger')
+const LoggerConstants = require('./src/logger-constants')
 const LoggerMiddleware = require('./src/logger-middleware')
 
 module.exports = {
-  constants,
   logger,
-  configureLogger,
+  LoggerConfigure,
+  LoggerConstants,
   LoggerMiddleware
 }

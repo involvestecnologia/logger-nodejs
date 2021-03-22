@@ -1,14 +1,14 @@
 const assert = require('assert').strict
 const stdout = require('test-console').stdout
 
-const { constants, configureLogger, LoggerMiddleware } = require('../index')
+const { LoggerConfigure, LoggerConstants, LoggerMiddleware } = require('../index')
 
 describe('Middleware request logger tests', function () {
   let config, inspect, req
 
   before(function () {
     config = { name: 'my-test', version: '1.0.2' }
-    configureLogger(config)
+    LoggerConfigure(config)
 
     req = {
       headers: {
@@ -19,15 +19,14 @@ describe('Middleware request logger tests', function () {
       hostname: 'host-of-the-user',
       originalUrl: '/v1/get/test'
     }
-    req.headers[constants.REQUEST_ID] = 5436772
-    req.headers[constants.CLIENT_ID] = 2
-    req.headers[constants.USER_ID] = 'abcd'
-    req.headers[constants.ENVIRONMENT_ID] = 0
-    req.headers[constants.APPLICATION] = 'test-app'
+    req.headers[LoggerConstants.HEADERS.REQUEST_ID] = 5436772
+    req.headers[LoggerConstants.HEADERS.CLIENT_ID] = 2
+    req.headers[LoggerConstants.HEADERS.USER_ID] = 'abcd'
+    req.headers[LoggerConstants.HEADERS.ENVIRONMENT_ID] = 0
+    req.headers[LoggerConstants.HEADERS.APPLICATION] = 'test-app'
   })
 
   it('should log successful request when contain all attributes defined', function (done) {
-    inspect = stdout.inspect()
     const message = 'Request log'
     const res = {
       end: endRequest,
@@ -43,6 +42,8 @@ describe('Middleware request logger tests', function () {
         }
       }
     }
+
+    inspect = stdout.inspect()
     LoggerMiddleware.logRequest(req, res, next)
     res.end() // simulating the end of request
 
@@ -57,11 +58,11 @@ describe('Middleware request logger tests', function () {
       assert.equal(log.message, message)
       assert.equal(log.program.name, config.name)
       assert.equal(log.program.version, config.version)
-      assert.equal(log.traceId, req.headers[constants.REQUEST_ID])
-      assert.equal(log.org.clientId, req.headers[constants.CLIENT_ID])
-      assert.equal(log.org.userId, req.headers[constants.USER_ID])
-      assert.equal(log.org.environmentId, req.headers[constants.ENVIRONMENT_ID])
-      assert.equal(log.org.applicationId, req.headers[constants.APPLICATION])
+      assert.equal(log.traceId, req.headers[LoggerConstants.HEADERS.REQUEST_ID])
+      assert.equal(log.org.clientId, req.headers[LoggerConstants.HEADERS.CLIENT_ID])
+      assert.equal(log.org.userId, req.headers[LoggerConstants.HEADERS.USER_ID])
+      assert.equal(log.org.environmentId, req.headers[LoggerConstants.HEADERS.ENVIRONMENT_ID])
+      assert.equal(log.org.applicationId, req.headers[LoggerConstants.HEADERS.APPLICATION])
       assert.equal(log.req.id, req.id)
       assert.equal(log.req.method, req.method)
       assert.equal(log.req.host, req.hostname)
@@ -78,7 +79,6 @@ describe('Middleware request logger tests', function () {
   })
 
   it('should log aborted request when contain all attributes defined', function (done) {
-    inspect = stdout.inspect()
     const message = 'Request was aborted'
     const listeners = {}
     const res = {
@@ -95,9 +95,10 @@ describe('Middleware request logger tests', function () {
         }
       }
     }
+
+    inspect = stdout.inspect()
     LoggerMiddleware.logRequest(req, res, next)
     listeners.close() // simulating the abort of request
-
     const log = JSON.parse(inspect.output)
     inspect.restore()
 
@@ -108,11 +109,11 @@ describe('Middleware request logger tests', function () {
     assert.equal(log.message, message)
     assert.equal(log.program.name, config.name)
     assert.equal(log.program.version, config.version)
-    assert.equal(log.traceId, req.headers[constants.REQUEST_ID])
-    assert.equal(log.org.clientId, req.headers[constants.CLIENT_ID])
-    assert.equal(log.org.userId, req.headers[constants.USER_ID])
-    assert.equal(log.org.environmentId, req.headers[constants.ENVIRONMENT_ID])
-    assert.equal(log.org.applicationId, req.headers[constants.APPLICATION])
+    assert.equal(log.traceId, req.headers[LoggerConstants.HEADERS.REQUEST_ID])
+    assert.equal(log.org.clientId, req.headers[LoggerConstants.HEADERS.CLIENT_ID])
+    assert.equal(log.org.userId, req.headers[LoggerConstants.HEADERS.USER_ID])
+    assert.equal(log.org.environmentId, req.headers[LoggerConstants.HEADERS.ENVIRONMENT_ID])
+    assert.equal(log.org.applicationId, req.headers[LoggerConstants.HEADERS.APPLICATION])
     assert.equal(log.req.id, req.id)
     assert.equal(log.req.method, req.method)
     assert.equal(log.req.host, req.hostname)
@@ -128,7 +129,6 @@ describe('Middleware request logger tests', function () {
   })
 
   it('should log error request when contain all attributes defined', function (done) {
-    inspect = stdout.inspect()
     const message = 'Request with error'
     const listeners = {}
     const res = {
@@ -145,9 +145,10 @@ describe('Middleware request logger tests', function () {
         }
       }
     }
+
+    inspect = stdout.inspect()
     LoggerMiddleware.logRequest(req, res, next)
     listeners.error(new Error('Pony is gone')) // simulating error of request
-
     const log = JSON.parse(inspect.output)
     inspect.restore()
 
@@ -158,11 +159,11 @@ describe('Middleware request logger tests', function () {
     assert.equal(log.message, message)
     assert.equal(log.program.name, config.name)
     assert.equal(log.program.version, config.version)
-    assert.equal(log.traceId, req.headers[constants.REQUEST_ID])
-    assert.equal(log.org.clientId, req.headers[constants.CLIENT_ID])
-    assert.equal(log.org.userId, req.headers[constants.USER_ID])
-    assert.equal(log.org.environmentId, req.headers[constants.ENVIRONMENT_ID])
-    assert.equal(log.org.applicationId, req.headers[constants.APPLICATION])
+    assert.equal(log.traceId, req.headers[LoggerConstants.HEADERS.REQUEST_ID])
+    assert.equal(log.org.clientId, req.headers[LoggerConstants.HEADERS.CLIENT_ID])
+    assert.equal(log.org.userId, req.headers[LoggerConstants.HEADERS.USER_ID])
+    assert.equal(log.org.environmentId, req.headers[LoggerConstants.HEADERS.ENVIRONMENT_ID])
+    assert.equal(log.org.applicationId, req.headers[LoggerConstants.HEADERS.APPLICATION])
     assert.equal(log.req.id, req.id)
     assert.equal(log.req.method, req.method)
     assert.equal(log.req.host, req.hostname)

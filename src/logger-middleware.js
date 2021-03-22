@@ -1,6 +1,6 @@
 'use strict'
 
-const constants = require('./logger-constants')
+const constants = require('./logger-constants').HEADERS
 const { logger } = require('./logger')
 
 const CONTENT_LENGTH = 'content-length'

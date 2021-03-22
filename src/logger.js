@@ -10,7 +10,7 @@ const logger = winston.createLogger({
   ]
 })
 
-function configureLogger (service, level = 'debug') {
+function LoggerConfigure (service, level = 'debug') {
   logger.defaultMeta = {
     program: { name: service.name, version: service.version },
     hostname: hostname
@@ -20,5 +20,5 @@ function configureLogger (service, level = 'debug') {
 
 module.exports = {
   logger,
-  configureLogger
+  LoggerConfigure
 }
