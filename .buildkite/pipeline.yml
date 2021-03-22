@@ -2,8 +2,7 @@ steps:
   - label: "Publish Library"
     key: "publish"
     command:
-      - "npm ci"
-      - "node version patch"
+      - "npm version patch"
     agents:
       queue: "node14"
     if: build.branch == "master"
