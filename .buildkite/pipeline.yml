@@ -10,9 +10,9 @@ steps:
   - label: "Publish Library"
     key: "publish"
     command:
-      - "npm config set sign-git-tag false"
       - "npm version patch"
-      - "git push --tags"
+      - "git push --signed"
+      - "git push --tags --signed"
     agents:
       queue: "node14"
     depends_on:
