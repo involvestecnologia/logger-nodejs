@@ -11,8 +11,8 @@ steps:
     key: "publish"
     command:
       - "npm version patch"
-      - "git push --signed"
-      - "git push --tags --signed"
+      - "git push origin HEAD:master --force --signed"
+      - "git push origin HEAD:master --force --signed --tags"
     agents:
       queue: "node14"
     depends_on:
