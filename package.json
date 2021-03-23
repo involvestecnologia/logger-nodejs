@@ -4,9 +4,7 @@
   "description": "Logger and middleware for http requests",
   "main": "index.js",
   "scripts": {
-    "test": "mocha 'test/**/*.js' --recursive --exit",
-    "preversion": "npm test",
-    "postversion": "git push && git push --tags"
+    "test": "mocha 'test/**/*.js' --recursive --exit"
   },
   "repository": {
     "type": "git",

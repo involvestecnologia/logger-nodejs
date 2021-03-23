@@ -1,9 +1,19 @@
 steps:
+  - label: "Tests"
+    key: "test"
+    command:
+      - npm install --no-audit
+      - npm test
+    agents:
+      queue: "node14"
+
   - label: "Publish Library"
     key: "publish"
     command:
-      - "npm config set sign-git-tag true"
       - "npm version patch"
+      - "git push --tags"
     agents:
       queue: "node14"
+    depends_on:
+      - "test"
     if: build.branch == "master"
