@@ -2,6 +2,7 @@ steps:
   - label: "Publish Library"
     key: "publish"
     command:
+      - "npm config set sign-git-tag true"
       - "npm version patch"
     agents:
       queue: "node14"
