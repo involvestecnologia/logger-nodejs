@@ -10,6 +10,7 @@ steps:
   - label: "Publish Library"
     key: "publish"
     command:
+      - "npm config set sign-git-tag false"
       - "npm version patch"
       - "git push --tags"
     agents:
