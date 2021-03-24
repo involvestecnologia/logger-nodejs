@@ -13,9 +13,10 @@ steps:
       git config --global user.email "sdom@involves.com";
       git config --global user.name "Buildkite";
       git checkout master && git fetch && git pull --rebase;
-      npm version patch -m "[skip ci]";
+      npm version patch -m "[skip ci] Bumping version";
       git push -u origin master;
       git push -u origin master --tags;
+      npm publish;
     agents:
       queue: "node14"
     depends_on:

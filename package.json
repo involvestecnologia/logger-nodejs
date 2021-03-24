@@ -1,6 +1,6 @@
 {
   "name": "@involves/logger-nodejs",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Logger and middleware for http requests",
   "main": "index.js",
   "scripts": {
