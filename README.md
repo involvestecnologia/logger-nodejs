@@ -4,7 +4,7 @@
 
 
 ```
-npm install @involvestecnologia/logger-nodejs
+npm install @involves/logger-nodejs
 ```
 
 ## Usage - Logger
