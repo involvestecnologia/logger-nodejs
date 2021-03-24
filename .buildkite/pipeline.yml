@@ -2,6 +2,7 @@ steps:
   - label: "Tests"
     key: "test"
     command:
+      - git config --global --unset url.ssh://git@github.com/.insteadOf https://github.com/
       - npm install --no-audit
       - npm test
     agents:
@@ -10,11 +11,10 @@ steps:
   - label: "Publish Library"
     key: "publish"
     command:
-      - "git config --global url.ssh://git@github.com/.insteadOf https://github.com/"
-      - "ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts"
-      - "npm version patch"
-      - "git push origin HEAD:master --force --signed"
-      - "git push origin HEAD:master --force --signed --tags"
+      - git config --global user.email "sdom@involves.com"
+      - git config --global user.name "Buildkite"
+      - npm version patch
+      - git push -u origin master --tags
     agents:
       queue: "node14"
     depends_on:
